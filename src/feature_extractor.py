@@ -11,7 +11,7 @@ class FeatureExtractor:
     def __init__(self):
         self.model = VGG16(weights='imagenet', include_top=True)
 
-    def spatial_features(self, image_path):
+    def extract_features(self, image_path):
         img_array = image.img_to_array(cv2.resize(cv2.imread(image_path), (224, 224)))
         img_array = np.expand_dims(img_array, axis=0)
         img_array = preprocess_input(img_array)

@@ -39,7 +39,7 @@ def train_dataset_parser(train_path):
             binary_labels.append(binary_vector)
 
             # Extract features
-            spatial_features = fe.spatial_features(os.path.join(train_path, image_name))
+            spatial_features = fe.extract_features(os.path.join(train_path, image_name))
             data.append(spatial_features)
 
             # Write the extracted features to the file
@@ -66,7 +66,7 @@ def test_dataset_parser(test_path):
             image_ids.append(image_id)
 
             # Extract features
-            spatial_features = fe.spatial_features(os.path.join(test_path, image_name))
+            spatial_features = fe.extract_features(os.path.join(test_path, image_name))
             data.append(spatial_features)
 
             # Write the extracted features to the file
