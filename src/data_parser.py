@@ -11,6 +11,7 @@ def train_dataset_parser(train_path):
     bag_of_words = set()
     images_labels = list()
 
+    # Extract labels and create bag of words
     for image_name in sorted(os.listdir(train_path)):
         token_list = [int(l) for l in re.findall(r"[\d']+", image_name)]
 
@@ -94,6 +95,9 @@ def train_features_parser(train_features_path):
             spatial_features_data.append(row[:4096])
             binary_labels.append(row[4096:])
 
+            if i == 21000:
+                break
+
     return spatial_features_data, binary_labels, bag_of_words
 
 
@@ -102,7 +106,10 @@ def test_features_parser(test_features_path):
     image_ids = list()
 
     with open(test_features_path, 'r') as f:
+        i = 0
         for row in csv.reader(f, delimiter=','):
+            i += 1
+            print(i)
             image_ids.append(row[:1])
             spatial_features_data.append(row[1:])
 

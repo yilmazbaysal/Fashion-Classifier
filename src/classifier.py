@@ -7,11 +7,12 @@ class Classifier:
     def __init__(self, number_of_labels, data_size=4096):
         self.model = Sequential()
 
-        self.model.add(BatchNormalization(input_shape=(4096,)))
+        self.model.add(BatchNormalization(input_shape=(4096, )))
         self.model.add(Dense(128, activation='relu', input_dim=4096))
 
         self.model.add(BatchNormalization())
         self.model.add(Dense(64, activation='relu'))
+        self.model.add(Dropout(0.5))
 
         self.model.add(BatchNormalization())
         self.model.add(Dense(32, activation='relu'))
@@ -22,7 +23,7 @@ class Classifier:
         self.model.compile(optimizer=Adam(), loss='binary_crossentropy')
 
     def train(self, train_data, labels):
-        self.model.fit(train_data, labels, shuffle=True, batch_size=64, epochs=1)
+        self.model.fit(train_data, labels, shuffle=True, batch_size=32, epochs=3)
 
     def test(self, test_data):
         return self.model.predict(test_data)
