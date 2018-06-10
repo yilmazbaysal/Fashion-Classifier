@@ -95,9 +95,6 @@ def train_features_parser(train_features_path):
             spatial_features_data.append(row[:4096])
             binary_labels.append(row[4096:])
 
-            if i == 21000:
-                break
-
     return spatial_features_data, binary_labels, bag_of_words
 
 

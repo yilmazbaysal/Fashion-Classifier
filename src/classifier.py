@@ -13,7 +13,7 @@ class LossHistory(keras.callbacks.Callback):
         self.accuracies = []
         self.val_accuracies = []
 
-    def on_batch_end(self, batch, logs={}):
+    def on_batch_end(self, batch, logs=None):
         self.losses.append(logs.get('loss'))
         self.accuracies.append(logs.get('acc'))
 
@@ -50,7 +50,7 @@ class Classifier:
             validation_split=0.1,
             shuffle=True,
             batch_size=64,
-            epochs=3,
+            epochs=2,
             callbacks=[loss_history]
         )
 

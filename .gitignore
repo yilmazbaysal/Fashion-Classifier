@@ -104,3 +104,7 @@ ENV/
 .idea
 dataset/
 src/json_downloader.py
+
+src/os
+src/sys
+src/numpy

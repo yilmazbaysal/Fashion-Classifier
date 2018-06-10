@@ -1,6 +1,5 @@
 import os
 import sys
-
 import numpy
 from matplotlib import pyplot
 
@@ -11,6 +10,9 @@ from data_parser import train_dataset_parser, test_dataset_parser, train_feature
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
+#
+#
+#
 if sys.argv[1] == 'dataset':
     print('READING DATA FROM DATASET\n...\n')
     train_data, binary_labels, bag_of_words = train_dataset_parser('../dataset/train/')
@@ -28,12 +30,12 @@ else:
 train_data = numpy.array(train_data)
 binary_labels = numpy.array(binary_labels)
 
-print(len(train_data))
-
+# Create a model instance
 classifier = Classifier(number_of_labels=len(binary_labels[0]))
 
 # Train the model
 metrics = classifier.train(train_data, binary_labels)
+
 
 ########
 # TEST #
@@ -48,7 +50,8 @@ else:
 # Test the model
 result = classifier.test(numpy.array(test_data))
 
-
+#
+#
 # Print results
 with open('../dataset/output.csv', 'w') as f:
     f.write('image,label\n')
@@ -61,7 +64,7 @@ with open('../dataset/output.csv', 'w') as f:
                 max_probability = (bag_of_words[j], result[i][j])
 
             # Get probabilities higher than a threshold
-            if result[i][j] >= 0.65:
+            if result[i][j] >= 0.50:
                 labels.add((bag_of_words[j], result[i][j]))
 
         # Add the max probability to the set (It is set, because max probability can be already exists in it)
@@ -76,19 +79,27 @@ pyplot.figure('Train metrics')
 
 pyplot.subplot(221)
 pyplot.plot(metrics.losses)
-pyplot.ylabel('Train Loss')
+pyplot.title('Train Loss')
+pyplot.ylabel('loss')
+pyplot.xlabel('batches')
 
 pyplot.subplot(222)
-pyplot.plot(metrics.val_losses)
-pyplot.ylabel('Validation Loss')
+pyplot.plot(metrics.accuracies, 'r')
+pyplot.title('Train Accuracy')
+pyplot.ylabel('accuracy')
+pyplot.xlabel('batches')
 
 pyplot.subplot(223)
-pyplot.plot(metrics.accuracies)
-pyplot.ylabel('Train Accuracy')
+pyplot.plot(metrics.val_losses, 'go-')
+pyplot.title('Validation Loss')
+pyplot.ylabel('loss')
+pyplot.xlabel('epochs')
 
 pyplot.subplot(224)
-pyplot.plot(metrics.val_accuracies)
-pyplot.ylabel('Validation Accuracy')
+pyplot.plot(metrics.val_accuracies, 'mo-')
+pyplot.title('Validation Accuracy')
+pyplot.ylabel('accuracy')
+pyplot.xlabel('epochs')
 
 pyplot.show()
 
