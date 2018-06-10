@@ -24,14 +24,11 @@ def train_dataset_parser(train_path):
     bag_of_words = list(bag_of_words)
     binary_labels = list()
     data = list()
-    i = 0
     with open('../dataset/features_train.csv', 'w') as f:
         # Write bag of words the file
         f.write('{0}\n'.format(','.join([str(x) for x in bag_of_words])))
 
         for image_name, labels in images_labels:
-            i += 1
-            print(i)
             binary_vector = [0] * len(bag_of_words)
 
             for label in labels:
@@ -58,10 +55,7 @@ def test_dataset_parser(test_path):
     data = list()
     image_ids = list()
     with open('../dataset/features_test.csv', 'w') as f:
-        i = 0
         for image_name in os.listdir(test_path):
-            i+=1
-            print(i)
             # Extract image ID
             image_id = image_name.split('.')[0]
             image_ids.append(image_id)
@@ -86,11 +80,7 @@ def train_features_parser(train_features_path):
 
     with open(train_features_path, 'r') as f:
         bag_of_words = [int(x) for x in f.readline().split(',')]
-
-        i = 0
         for row in csv.reader(f, delimiter=','):
-            i += 1
-            print(i)
 
             spatial_features_data.append(row[:4096])
             binary_labels.append(row[4096:])
@@ -103,10 +93,7 @@ def test_features_parser(test_features_path):
     image_ids = list()
 
     with open(test_features_path, 'r') as f:
-        i = 0
         for row in csv.reader(f, delimiter=','):
-            i += 1
-            print(i)
             image_ids.append(row[:1])
             spatial_features_data.append(row[1:])
 
